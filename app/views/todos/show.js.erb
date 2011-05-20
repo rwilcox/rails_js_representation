@@ -1,0 +1,30 @@
+(function(){
+  var myobj = {
+     reallyDue: function() {
+         if (<%= @todo.new_record? -%>) {
+           alert("this is a new record");
+         } else {
+            alert("old record");
+         }
+     },
+     
+     route: function() {
+       return '<%= todo_url(@todo) -%>';
+     },
+     
+     clickDelete: function() {
+       $.ajax({
+          url: ajaxRoute(),
+          type : "DESTROY",
+          success: function(data, text) {
+            alert("deleted");
+          }
+       });
+     }
+  };
+
+  json_result = <%= @todo.to_json.html_safe -%>;
+
+  myobj = $.extend( myobj, json_result.todo );
+  return myobj;
+})();
